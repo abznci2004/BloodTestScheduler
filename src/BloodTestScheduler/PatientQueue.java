@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package bloodtestscheduler;
+package BloodTestScheduler;
 
 import java.util.PriorityQueue;
 
@@ -21,5 +21,5 @@ public class PatientQueue {
 
     public boolean isEmpty() { return queue.isEmpty(); }
 
-    public int size() { return queue.size(); }  // Added method to check queue size
+    public int size() { return queue.size(); }  
 }
