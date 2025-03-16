@@ -10,6 +10,16 @@ public class PatientQueue {
     private PriorityQueue<Patient> queue = new PriorityQueue<>();
 
     public void addPatient(Patient p) { queue.add(p); }
-    public Patient getNextPatient() { return queue.poll(); }
+
+    public Patient getNextPatient() { 
+        if (queue.isEmpty()) {
+            System.out.println("⚠ No patients in queue.");
+            return null; 
+        }
+        return queue.poll();
+    }
+
     public boolean isEmpty() { return queue.isEmpty(); }
+
+    public int size() { return queue.size(); }  // Added method to check queue size
 }
