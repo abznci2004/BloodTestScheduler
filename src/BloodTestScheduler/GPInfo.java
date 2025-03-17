@@ -23,6 +23,7 @@ public class GPInfo {
     public String getGpName() { return gpName; }
     public String getHospital() { return hospital; }
     public String getContactNumber() { return contactNumber; }
+     
 
     // Setters
     public void setGpName(String gpName) { this.gpName = gpName; }

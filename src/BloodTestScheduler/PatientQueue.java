@@ -23,3 +23,4 @@ public class PatientQueue {
 
     public int size() { return queue.size(); }  
 }
+

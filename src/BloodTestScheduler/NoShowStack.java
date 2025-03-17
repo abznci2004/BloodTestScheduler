@@ -4,17 +4,36 @@
  */
 package BloodTestScheduler;
 
-import java.util.LinkedList;
+import java.util.Stack;
 
-public class NoShowStack {
-    private LinkedList<String> noShows = new LinkedList<>();
+public class NoShowStack implements StackADT<String> {
+    private Stack<String> stack = new Stack<>();
 
-    public void addNoShow(String name) {
-        if (noShows.size() >= 5) noShows.removeFirst();
-        noShows.add(name);
+    @Override
+    public void push(String name) {
+        if (stack.size() >= 5) {
+            stack.remove(0); // Keep only the last 5 no-shows
+        }
+        stack.push(name);
     }
 
-    public LinkedList<String> getNoShows() { 
-        return new LinkedList<>(noShows); 
+    @Override
+    public String pop() {
+        return stack.isEmpty() ? "No No-Shows" : stack.pop();
+    }
+
+    @Override
+    public String peek() {
+        return stack.isEmpty() ? "No No-Shows" : stack.peek();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+
+    @Override
+    public int size() {
+        return stack.size();
     }
 }
