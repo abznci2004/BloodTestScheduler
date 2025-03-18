@@ -4,9 +4,7 @@
  */
 package BloodTestScheduler;
 
-/**
- * Represents General Practitioner (GP) information.
- */
+
 public class GPInfo {
     private String gpName;
     private String hospital;

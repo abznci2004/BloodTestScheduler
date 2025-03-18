@@ -4,21 +4,24 @@
  */
 package BloodTestScheduler;
 
-
+import java.util.Stack;
+import java.util.Random;
+import java.util.PriorityQueue;
 
 /**
  *
- * @author msi410
+ * @author abdallah haouit
  */
 
 
 public class BloodTestSchedulerGUI extends javax.swing.JFrame {
 
     private PatientQueue patientQueue = new PatientQueue();
-private NoShowStack noShowStack = new NoShowStack();
-    /**
-     * Creates new form BloodTestSchedulerGUI
-     */
+private Stack<Patient> noShowStack = new Stack<>();
+private PatientLinkedList patientList = new PatientLinkedList();
+
+
+   
     public BloodTestSchedulerGUI() {
         initComponents();
     }
@@ -46,6 +49,10 @@ private NoShowStack noShowStack = new NoShowStack();
         btnSearchPatient = new javax.swing.JButton();
         txtSearchPatient = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        chkHospitalWard = new javax.swing.JCheckBox();
+        txtQueueDisplay = new javax.swing.JTextArea();
+        btnShowQueue = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -100,6 +107,11 @@ private NoShowStack noShowStack = new NoShowStack();
         });
 
         btnSearchPatient.setText("Search");
+        btnSearchPatient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchPatientActionPerformed(evt);
+            }
+        });
 
         txtSearchPatient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,73 +121,110 @@ private NoShowStack noShowStack = new NoShowStack();
 
         jLabel4.setText("Search Patient:");
 
+        chkHospitalWard.setText("Comes from Hospital Ward?");
+
+        txtQueueDisplay.setColumns(20);
+        txtQueueDisplay.setRows(5);
+
+        btnShowQueue.setText("Show Queue");
+        btnShowQueue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowQueueActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Mark as No-Show");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(93, 93, 93)
+                        .addComponent(jButton4))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearchPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnSearchPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(27, 27, 27)
-                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(cmbPriority, 0, 1, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(52, 52, 52)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(15, 15, 15)
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtSearchPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSearchPatient, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(64, 64, 64))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(chkHospitalWard))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                        .addComponent(txtQueueDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61))))
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addComponent(jButton1)
+                .addGap(27, 27, 27)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(197, 197, 197)
+                .addComponent(btnShowQueue)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(chkHospitalWard))
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnShowQueue)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtQueueDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(cmbPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSearchPatient)
                     .addComponent(txtSearchPatient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -195,33 +244,80 @@ private NoShowStack noShowStack = new NoShowStack();
     }//GEN-LAST:event_cmbPriorityActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        String name = txtName.getText();  // Get name from text field
+        
+    String name = txtName.getText().trim();
     int age;
-try {
-    age = Integer.parseInt(jTextField1.getText().trim()); // ✅ Correct field + trim spaces
-} catch (NumberFormatException ex) {
-    Display.append(" Invalid age format!\n");
-    return;
-}
-    String priority = (String) cmbPriority.getSelectedItem();  // Get selected priority
-    GPInfo gpInfo = new GPInfo("Dr. Smith", "City Hospital", "123-456-789");  // Placeholder GP details
 
-    Patient newPatient = new Patient(name, age, priority, gpInfo);
+    try {
+        age = Integer.parseInt(jTextField1.getText().trim());  
+    } catch (NumberFormatException ex) {
+        Display.append("❌ Invalid age format!\n");
+        return;
+    }
+
+    String priority = (String) cmbPriority.getSelectedItem();
+    boolean fromHospitalWard = chkHospitalWard.isSelected();
+
+    // list of gps
+    GPInfo[] gpList = {
+        new GPInfo("Dr. Smith", "Connoly Hospital", "01-456-789"),
+        new GPInfo("Dr. Patel", "St. Marys Clinic", "01-654-321"),
+        new GPInfo("Dr. Hamilton", "General Hospital", "01-789-123"),
+        new GPInfo("Dr. O’Connor", "Downtown Medical", "01-222-333"),
+        new GPInfo("Dr. Ahmed", "St James Hospital", "01-888-999")
+    };
+
+    //  Selects a randonm GP
+    Random rand = new Random();
+    GPInfo gpInfo = gpList[rand.nextInt(gpList.length)]; 
+
+    
+    Patient newPatient = new Patient(name, age, priority, gpInfo, fromHospitalWard);
+
+    
     patientQueue.addPatient(newPatient);
+    patientList.add(newPatient);
 
-    Display.append("✔ Added: " + name + " (Priority: " + priority + ", Age: " + age + ", GP: " + gpInfo + ")\n");
+  
+    Display.append("✔ Added: " + newPatient + "\n");
 
-
-    jTextField1.setText("");  // Clear name field
-    txtSearchPatient.getText();  // Clear age field
+    //  Clear fields
+    txtName.setText("");  
+    jTextField1.setText("");  
+    chkHospitalWard.setSelected(false);
         
     
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+       if (!patientQueue.isEmpty()) {
+        Patient nextPatient = patientQueue.getNextPatient();
+
+        
+        Stack<Patient> tempStack = new Stack<>();
+        while (!noShowStack.isEmpty()) {
+            if (noShowStack.peek().equals(nextPatient)) {
+                noShowStack.pop(); // Remove from no-shows
+                break;
+            } else {
+                tempStack.push(noShowStack.pop());
+            }
+        }
+        
+        while (!tempStack.isEmpty()) {
+            noShowStack.push(tempStack.pop());
+        }
+
+        Display.append("🔄 Processing: " + nextPatient + "\n");
+    } else {
+        Display.append("⚠ No patients in queue.\n");
+    }
+        
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
@@ -230,14 +326,14 @@ try {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        
-      
-       if (!noShowStack.isEmpty()) {
-        Display.append("🚨 No-Shows:\n");
-        for (int i = 0; i < noShowStack.size(); i++) {
-            Display.append("❌ " + noShowStack.peek() + "\n");
-        }
-    } else {
+      if (noShowStack.isEmpty()) {
         Display.append("✅ No recent no-shows.\n");
+        return;
+    }
+    
+    Display.append("⚠ Last 5 No-Shows:\n");
+    for (Patient p : noShowStack) {
+        Display.append("- " + p.getName() + " (Priority: " + p.getPriority() + ", Age: " + p.getAge() + ")\n");
     }
         
         
@@ -246,6 +342,75 @@ try {
     private void txtSearchPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSearchPatientActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchPatientActionPerformed
+
+    private void btnSearchPatientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchPatientActionPerformed
+        
+      String searchName = txtSearchPatient.getText().trim();  // Get search input
+    
+    if (searchName.isEmpty()) {
+        Display.append("⚠ Enter a name to search!\n");
+        return;
+    }
+
+    // 🔍 Debugging: Print all patients before searching
+    Display.append("🔍 Current Patients in List:\n");
+    for (int i = 0; i < patientList.size(); i++) {
+        Display.append("- " + patientList.get(i).getName() + "\n");
+    }
+
+    // Now perform the search
+    Patient foundPatient = PatientSearch.searchRecursive(patientList, searchName, 0);
+
+    if (foundPatient != null) {
+        Display.append("✅ Patient Found: " + foundPatient + "\n");
+    } else {
+        Display.append("❌ Patient not found.\n");
+    }
+    }//GEN-LAST:event_btnSearchPatientActionPerformed
+
+    private void btnShowQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowQueueActionPerformed
+
+        if (patientQueue.isEmpty()) {
+            txtQueueDisplay.setText("No patients in queue.");
+            return;
+        }
+
+        PriorityQueue<Patient> tempQueue = new PriorityQueue<>(patientQueue.getQueue());
+
+      
+        StringBuilder queueText = new StringBuilder("🔹 Current Patient Order:\n");
+
+        while (!tempQueue.isEmpty()) {
+            Patient p = tempQueue.poll();
+            queueText.append("➡ ").append(p.getName())
+            .append(" (Priority: ").append(p.getPriority())
+            .append(", Age: ").append(p.getAge())
+            .append(", Ward: ").append(p.isFromHospitalWard() ? "Yes" : "No")
+            .append(")\n");
+        }
+
+        txtQueueDisplay.setText(queueText.toString());
+    }//GEN-LAST:event_btnShowQueueActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    if (patientQueue.isEmpty()) {
+        Display.append("⚠ No patients to mark as no-show.\n");
+        return;
+    }
+    
+    // Get the next patient who was supposed to be processed
+    Patient missedPatient = patientQueue.getNextPatient(); 
+
+    
+    noShowStack.push(missedPatient);
+
+    // Keep only the last 5 no-shows
+    if (noShowStack.size() > 5) {
+        noShowStack.remove(0);
+    }
+
+    Display.append("❌ No-Show: " + missedPatient.getName() + " (Priority: " + missedPatient.getPriority() + ")\n");
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,7 +439,7 @@ try {
         }
         //</editor-fold>
 
-        /* Create and display the form */
+      
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new BloodTestSchedulerGUI().setVisible(true);
@@ -285,10 +450,13 @@ try {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea Display;
     private javax.swing.JButton btnSearchPatient;
+    private javax.swing.JButton btnShowQueue;
+    private javax.swing.JCheckBox chkHospitalWard;
     private javax.swing.JComboBox<String> cmbPriority;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -296,6 +464,7 @@ try {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtName;
+    private javax.swing.JTextArea txtQueueDisplay;
     private javax.swing.JTextField txtSearchPatient;
     // End of variables declaration//GEN-END:variables
 }

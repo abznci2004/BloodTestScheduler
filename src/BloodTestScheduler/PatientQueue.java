@@ -10,6 +10,10 @@ public class PatientQueue {
     private PriorityQueue<Patient> queue = new PriorityQueue<>();
 
     public void addPatient(Patient p) { queue.add(p); }
+    
+    public PriorityQueue<Patient> getQueue() {
+    return queue;
+}
 
     public Patient getNextPatient() { 
         if (queue.isEmpty()) {
